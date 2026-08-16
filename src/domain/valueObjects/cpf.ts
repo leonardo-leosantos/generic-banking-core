@@ -1,15 +1,15 @@
 export class CPF {
     private readonly _value: string;
 
-    public get value(): string {
-        return this._value;
+    constructor(value: string) {
+        if (!this.validate(value)) {
+            throw new Error("Invalid CPF")
+        }
+        this._value = value
     }
 
-    constructor(numero: string) {
-        if (!this.validate(numero)) {
-            throw new Error("CPJ Inválido")
-        }
-        this._value = numero
+    public get value(): string {
+        return this._value;
     }
 
     private validate (value: string) : boolean {
