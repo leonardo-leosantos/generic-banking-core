@@ -1,22 +1,29 @@
-export class CPF {
+export class Cpf {
     private readonly _value: string;
 
     constructor(value: string) {
-        if (!this.validate(value)) {
-            throw new Error("Invalid CPF")
+        const normalized = Cpf.normalize(value);
+        if (!Cpf.validate(normalized)) {
+            // TODO: replace with a custom domain error (e.g. InvalidCpfError)
+            throw new Error("Invalid CPF");
         }
-        this._value = value
+        this._value = normalized;
     }
 
     public get value(): string {
         return this._value;
     }
 
-    private validate (value: string) : boolean {
-        if (value) {
-            // TODO: validar cpf
-            return true;
-        } 
-        return false;
+    public equals(other: unknown): boolean {
+        return other instanceof Cpf && other._value === this._value;
+    }
+
+    private static normalize(value: string): string {
+        return value.replace(/\D/g, "");
+    }
+
+    private static validate(value: string): boolean {
+        // TODO: validate check digits and reject repeated-digit sequences
+        return value.length === 11;
     }
 }

@@ -1,23 +1,29 @@
 export class Email {
     private readonly _value: string;
 
-    constructor(value:string) {
-        if(!Email.validate(value)) {
+    constructor(value: string) {
+        const normalized = Email.normalize(value);
+        if (!Email.validate(normalized)) {
+            // TODO: replace with a custom domain error (e.g. InvalidEmailError)
             throw new Error("Invalid email");
         }
-
-        this._value = value;
+        this._value = normalized;
     }
 
     public get value(): string {
         return this._value;
     }
 
-    private static validate(email:string) : boolean {
-        if(email) {
-            // TODO: validar email
-            return true;
-        }
-        return false;
+    public equals(other: unknown): boolean {
+        return other instanceof Email && other._value === this._value;
+    }
+
+    private static normalize(value: string): string {
+        return value.trim().toLowerCase();
+    }
+
+    private static validate(value: string): boolean {
+        // TODO: validate email format
+        return value.length > 0;
     }
 }
