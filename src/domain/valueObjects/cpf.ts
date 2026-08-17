@@ -23,7 +23,24 @@ export class Cpf {
     }
 
     private static validate(value: string): boolean {
-        // TODO: validate check digits and reject repeated-digit sequences
-        return value.length === 11;
+        if (!/^\d{11}$/.test(value)) {
+            return false;
+        }
+        if (/^(\d)\1{10}$/.test(value)) {
+            return false;
+        }
+        return (
+            Cpf.computeCheckDigit(value, 9) === Number(value.charAt(9)) &&
+            Cpf.computeCheckDigit(value, 10) === Number(value.charAt(10))
+        );
+    }
+
+    private static computeCheckDigit(value: string, length: number): number {
+        let sum = 0;
+        for (let i = 0; i < length; i++) {
+            sum += Number(value.charAt(i)) * (length + 1 - i);
+        }
+        const remainder = (sum * 10) % 11;
+        return remainder === 10 ? 0 : remainder;
     }
 }

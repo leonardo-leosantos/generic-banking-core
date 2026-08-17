@@ -1,14 +1,18 @@
-import { Contact } from "./contact.js";
+import type { Contact } from "./contact.js";
+import type { Cpf } from "../valueObjects/cpf.js";
+import type { Cnpj } from "../valueObjects/cnpj.js";
 
 export class Customer {
     private readonly _id: string;
     private readonly _name: string;
-    // Entity aggregate - Contact 
+    private readonly _document: Cpf | Cnpj;
+    // Entity aggregate - Contact
     private readonly _contacts: Contact[];
 
-    constructor(id: string, name: string) {
+    constructor(id: string, name: string, document: Cpf | Cnpj) {
         this._id = id;
         this._name = name;
+        this._document = document;
         this._contacts = [];
     }
 
@@ -20,6 +24,10 @@ export class Customer {
         return this._name;
     }
 
+    public get document(): Cpf | Cnpj {
+        return this._document;
+    }
+
     public get contacts(): readonly Contact[] {
         return this._contacts;
     }
@@ -29,6 +37,5 @@ export class Customer {
         this._contacts.push(contact);
     }
 
-    // TODO: Customer requires a valid document (CPF or CNPJ) — add when Cnpj VO exists
     // TODO: "active" rule — at least one principal contact required to open an account
 }

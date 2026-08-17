@@ -23,7 +23,8 @@ export class Phone {
     }
 
     private static validate(value: string): boolean {
-        // TODO: validate phone format (DDD + number length)
-        return value.length > 0;
+        // Brazilian national format: 2-digit area code + 8 or 9 digits.
+        // TODO: decide how to handle country code (+55) on input
+        return /^[1-9][0-9]{9,10}$/.test(value);
     }
 }

@@ -23,7 +23,6 @@ export class Email {
     }
 
     private static validate(value: string): boolean {
-        // TODO: validate email format
-        return value.length > 0;
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
     }
 }
