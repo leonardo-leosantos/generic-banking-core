@@ -1,4 +1,6 @@
-export class Cnpj {
+import type { Document, DocumentType } from "./document.js";
+
+export class Cnpj implements Document {
     private static readonly firstDigitWeights = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
     private static readonly secondDigitWeights = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
 
@@ -15,6 +17,10 @@ export class Cnpj {
 
     public get value(): string {
         return this._value;
+    }
+
+    public get type(): DocumentType {
+        return "cnpj";
     }
 
     public equals(other: unknown): boolean {

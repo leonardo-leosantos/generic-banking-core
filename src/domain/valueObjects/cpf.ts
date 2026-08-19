@@ -1,4 +1,6 @@
-export class Cpf {
+import type { Document, DocumentType } from "./document.js";
+
+export class Cpf implements Document {
     private readonly _value: string;
 
     constructor(value: string) {
@@ -12,6 +14,10 @@ export class Cpf {
 
     public get value(): string {
         return this._value;
+    }
+
+    public get type(): DocumentType {
+        return "cpf";
     }
 
     public equals(other: unknown): boolean {

@@ -1,15 +1,14 @@
 import type { Contact } from "./contact.js";
-import type { Cpf } from "../valueObjects/cpf.js";
-import type { Cnpj } from "../valueObjects/cnpj.js";
+import type { Document } from "../valueObjects/document.js";
 
 export class Customer {
     private readonly _id: string;
     private readonly _name: string;
-    private readonly _document: Cpf | Cnpj;
+    private readonly _document: Document;
     // Entity aggregate - Contact
     private readonly _contacts: Contact[];
 
-    constructor(id: string, name: string, document: Cpf | Cnpj) {
+    constructor(id: string, name: string, document: Document) {
         this._id = id;
         this._name = name;
         this._document = document;
@@ -24,7 +23,7 @@ export class Customer {
         return this._name;
     }
 
-    public get document(): Cpf | Cnpj {
+    public get document(): Document {
         return this._document;
     }
 
